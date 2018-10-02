@@ -17,7 +17,7 @@
 
 #include <sstream>
 #include <iostream>
-#include <string> 
+#include <string>
 
 #include "RooAbsPdf.h"
 #include "RooProdPdf.h"
@@ -95,7 +95,7 @@ Double_t RooUserPdf::evaluate() const
 void makeWorkSpace_H2A4Mu(double mA_GeV = 0.4, int seed=37) {
 
   using namespace RooFit;
-  RooRandom::randomGenerator()->SetSeed(seed); 
+  RooRandom::randomGenerator()->SetSeed(seed);
   RooWorkspace *w_H2A4Mu = new RooWorkspace("w_H2A4Mu");
   const double       m_min  = 0.2113;
   const double       m_max  = 9.;
@@ -116,8 +116,8 @@ void makeWorkSpace_H2A4Mu(double mA_GeV = 0.4, int seed=37) {
   TTree* tree_dimudimu_signal_2D = new TTree("tree_dimudimu_signal_2D","tree_dimudimu_signal_2D");
   tree_dimudimu_signal_2D->Branch("massC",&massC,"massC/D");
   tree_dimudimu_signal_2D->Branch("massF",&massF,"massF/D");
-//  massC = 100.; //BLINDED
-//  massF = 100.;
+  massC = 100.; //BLINDED
+  massF = 100.;
 //  massC = 0.4258973;   massF = 0.5848349; tree_dimudimu_signal_2D->Fill();
 //  massC = 3.0722196;   massF = 3.2662851; tree_dimudimu_signal_2D->Fill();
 //  massC = 3.0728187;   massF = 3.0538983; tree_dimudimu_signal_2D->Fill();
@@ -130,19 +130,21 @@ void makeWorkSpace_H2A4Mu(double mA_GeV = 0.4, int seed=37) {
 //  massC = 2.3835377;   massF = 2.3580303; tree_dimudimu_signal_2D->Fill();
 //  massC = 0.9244344;   massF = 0.9522788; tree_dimudimu_signal_2D->Fill();
 //  massC = 3.0625894;   massF = 3.0958375;
-  massC =0.8079733;   massF = 0.7267103; tree_dimudimu_signal_2D->Fill(); 
-  massC =2.8599584;   massF = 3.0017674; tree_dimudimu_signal_2D->Fill();
-  massC =0.4258973;   massF = 0.5848349; tree_dimudimu_signal_2D->Fill();
-  massC =3.0722196;   massF = 3.2662851; tree_dimudimu_signal_2D->Fill();
-  massC =3.0728187;   massF = 3.0538983; tree_dimudimu_signal_2D->Fill();
-  massC =3.0950253;   massF = 3.3617882; tree_dimudimu_signal_2D->Fill();
-  massC =3.1521356;   massF = 2.8546791; tree_dimudimu_signal_2D->Fill();
-  massC =2.8254406;   massF = 2.6496100; tree_dimudimu_signal_2D->Fill();
-  massC =1.2541753;   massF = 1.1524148; tree_dimudimu_signal_2D->Fill();
-  massC =2.3863873;   massF = 2.3582603; tree_dimudimu_signal_2D->Fill();
-  massC =3.0641751;   massF = 3.0972354; tree_dimudimu_signal_2D->Fill();
-  massC =1.9403913;   massF = 1.8196427; tree_dimudimu_signal_2D->Fill();
-  massC =1.3540757;   massF = 1.4834892; 
+
+  // comment out these lines
+  // massC =0.8079733;   massF = 0.7267103; tree_dimudimu_signal_2D->Fill();
+  // massC =2.8599584;   massF = 3.0017674; tree_dimudimu_signal_2D->Fill();
+  // massC =0.4258973;   massF = 0.5848349; tree_dimudimu_signal_2D->Fill();
+  // massC =3.0722196;   massF = 3.2662851; tree_dimudimu_signal_2D->Fill();
+  // massC =3.0728187;   massF = 3.0538983; tree_dimudimu_signal_2D->Fill();
+  // massC =3.0950253;   massF = 3.3617882; tree_dimudimu_signal_2D->Fill();
+  // massC =3.1521356;   massF = 2.8546791; tree_dimudimu_signal_2D->Fill();
+  // massC =2.8254406;   massF = 2.6496100; tree_dimudimu_signal_2D->Fill();
+  // massC =1.2541753;   massF = 1.1524148; tree_dimudimu_signal_2D->Fill();
+  // massC =2.3863873;   massF = 2.3582603; tree_dimudimu_signal_2D->Fill();
+  // massC =3.0641751;   massF = 3.0972354; tree_dimudimu_signal_2D->Fill();
+  // massC =1.9403913;   massF = 1.8196427; tree_dimudimu_signal_2D->Fill();
+  // massC =1.3540757;   massF = 1.4834892;
 
   tree_dimudimu_signal_2D->Fill();
   cout<<"--- PRINT tree_dimudimu_signal_2D ---"<<endl;
