@@ -51,15 +51,85 @@ void CreateDatacards( bool makeRoot=false ){
   for( int i=0; i<N_Signals; i++){ Seeds[i]=-1; }
   //N events
   int obs = -1;
-  float futureScaleFactor = 83.33;
 
-  float signal_rate = 1, BBbar_2D_rate = 9.214 * futureScaleFactor, DJpsiS_2D_rate = 0.31806 * futureScaleFactor, DJpsiD_2D_rate = 0.019 * futureScaleFactor;
+  int projection = 2;
+  float futureScaleFactor = 83.56;
+
+  // signal and background rate
+  float signal_rate = 1;
+  float BBbar_2D_rate = 9.214 * futureScaleFactor;
+  float DJpsiS_2D_rate = 0.31806 * futureScaleFactor;
+  float DJpsiD_2D_rate = 0.019 * futureScaleFactor;
+
   //Signal Uncertainties
-  float lumi_13TeV = 1.01, mu_hlt   = 1.01,  mu_id   = 1.005,  mu_iso = 1.02,  mu_pu   = 1.0017;
-  float ovlp_trk = 1.01, ovlp_mu = 1.01, dimu_M = 1.015, nnlo_pt = 1.01 , pdf_as = 1.04, HxecBr = 1.019;
+  float syst_uncert_lumi_13TeV = 0.025;
+  float syst_uncert_hlt = 0.06;
+  float syst_uncert_mu_id = 4*0.006;
+  float syst_uncert_mu_iso = 2*0.001;
+  float syst_uncert_overlap_tracker = 2*0.012;
+  float syst_uncert_overlap_muon = 2*0.013;
+  float syst_pileup = 0.0017;
+  float syst_dimuon_mass_consistency = 0.015;
+  float syst_nnlo_pt = 0.02;
+  float syst_pdf_as = 0.08;
+  float syst_H_xs_br = 0.038;
+
+  // background
+  float syst_bbar_scaling = 0.20;
+  float syst_jpsi_scaling = 0.15;
+
   //Background Uncertainties
-  float BBbar_norm=56 * futureScaleFactor, BBbar_norm2=0.16454, BBbar_norm3=1.123, BBbar_syst=1.2;
-  float DJpsiD_norm=5 * futureScaleFactor, DJpsiD_norm2=0.0038, DJpsiS_norm=27 * futureScaleFactor, DJpsiS_norm2=0.01178, DJpsi_extr=1.1;
+  float BBbar_norm=56 * futureScaleFactor, BBbar_norm2=0.16454, BBbar_norm3=1.123;//, BBbar_syst=1.2;
+  float DJpsiD_norm=5 * futureScaleFactor, DJpsiD_norm2=0.0038, DJpsiS_norm=27 * futureScaleFactor, DJpsiS_norm2=0.01178;//, DJpsi_extr=1.1;
+
+  // S1+: This scenario is useful for direct comparison with current analyses. As such it is a sanity check.
+  // Statistical uncertainty is scaled with 1/sqrt(L).
+  //   Systematic uncertainties (experimental, theoretical and luminosity) are kept constant with integrated luminosity.
+  if (projection==1) {
+    // do nothing with systematics
+  }
+
+  // S2+: This scenario reflects uncertainties that we consider achievable from todays perspective.
+  //   Statistical uncertainty is scaled with 1/sqrt(L).
+  //   Theory uncertainties are scaled by a factor 1/2
+  //   In extrapolations from Run-2, experimental systematic uncertainties are scaled down from todays values by the square root of the integrated luminosity until "floor" values as listed below are reached.
+  else if (projection==2) {
+    syst_uncert_lumi_13TeV = 0.01;
+    syst_uncert_hlt = 0.01;
+    syst_uncert_mu_id = 4*0.005;
+    // https://twiki.cern.ch/twiki/bin/viewauth/CMS/YR2018Systematics
+    // according to twiki muon isolation already included in muon ID
+    syst_uncert_mu_iso *= 1/sqrt(3000);
+    syst_uncert_overlap_tracker *= 1/sqrt(3000);
+    syst_uncert_overlap_muon *= 1/sqrt(3000);
+    syst_pileup *= 1/sqrt(3000);
+    syst_dimuon_mass_consistency *= 1/sqrt(3000);
+    // theory
+    syst_nnlo_pt /= 2;
+    syst_pdf_as /= 2;
+    syst_H_xs_br /= 2;
+    // background
+    syst_bbar_scaling *= 1/sqrt(3000);
+    syst_jpsi_scaling *= 1/sqrt(3000);
+  }
+
+  // factors used in limit setting
+  float lumi_13TeV = 1 + syst_uncert_lumi_13TeV;
+  float mu_hlt   = 1 + syst_uncert_hlt;
+  float mu_id   = 1 + syst_uncert_mu_id;
+  float mu_iso = 1 + syst_uncert_mu_iso;
+  float mu_pu = 1 + syst_pileup;
+  float ovlp_trk = 1 + syst_uncert_overlap_tracker;
+  float ovlp_mu = 1 + syst_uncert_overlap_muon;
+  float dimu_M = 1 + syst_dimuon_mass_consistency;
+  float nnlo_pt = 1 + syst_nnlo_pt;
+  float pdf_as = 1 + syst_pdf_as;
+  float HxecBr = 1 + syst_H_xs_br;
+
+  //Background Uncertainties
+  float BBbar_syst = 1 + syst_bbar_scaling;
+  float DJpsi_extr = 1 + syst_jpsi_scaling;
+
   //Creat Folders
   TString makeFold="mkdir -p macros/sh";
   system( makeFold.Data() );
