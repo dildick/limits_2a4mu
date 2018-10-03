@@ -26,12 +26,12 @@ CMS_eff_mu_iso          lnN   1.000      -         -         -           Muon is
 CMS_eff_mu_pileup       lnN   1.000      -         -         -           Reconstruction of close muons in the muon system 
 QCDscale_ggH            lnN   1.040      -         -         -           Theoretical uncertainties in acceptance (not included in model independent limit) 
 Xsec_BR_decay           lnN   1.019      -         -         -           Theoretical uncertainties in production (not included in model independent limit) 
-CMS_H2A4Mu_eff_ovlp_trk lnN   1.000      -         -         -           Reconstruction of close muons in the tracker 
-CMS_H2A4Mu_eff_ovlp_mu  lnN   1.000      -         -         -           Reconstruction of close muons in the muon system 
-CMS_H2A4Mu_effdimu_mass lnN   1.000      -         -         -           Dimuons mass consistency m1~m2 
+CMS_H2A4Mu_eff_ovlp_trk lnN   1.003      -         -         -           Reconstruction of close muons in the tracker 
+CMS_H2A4Mu_eff_ovlp_mu  lnN   1.003      -         -         -           Reconstruction of close muons in the muon system 
+CMS_H2A4Mu_effdimu_mass lnN   1.002      -         -         -           Dimuons mass consistency m1~m2 
 CMS_H2A4Mu_nnlo_pt      lnN   1.010      -         -         -           Reconstruction of close muons in the muon system 
 CMS_H2A4Mu_BBbar_norm   lnN     -       1.123      -         -           BBbar estimate
-CMS_H2A4Mu_BBbar_syst   lnN     -       1.004      -         -           Syst on BBar normalization from the difference of the estimation done inverting ISO cut 
-CMS_H2A4Mu_DJpsi_extr   lnN     -         -       1.003     1.003        Double J/psi MC-to-data extrapolation 
+CMS_H2A4Mu_BBbar_syst   lnN     -       1.022      -         -           Syst on BBar normalization from the difference of the estimation done inverting ISO cut 
+CMS_H2A4Mu_DJpsi_extr   lnN     -         -       1.016     1.016        Double J/psi MC-to-data extrapolation 
 CMS_H2A4Mu_DJpsiS_norm  gmN 2256  -         -       0.0118     -           Double J/psi single parton scattering (SPS) estimate of 0.061 comes from 3 MC events 
 CMS_H2A4Mu_DJpsiD_norm  gmN 418   -         -        -        0.003800     Double J/psi double parton scattering (DPS) estimate of 0.003 comes from 8 MC events 
