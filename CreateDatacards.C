@@ -99,18 +99,18 @@ void CreateDatacards( bool makeRoot=false ){
     syst_uncert_mu_id = 4*0.005;
     // https://twiki.cern.ch/twiki/bin/viewauth/CMS/YR2018Systematics
     // according to twiki muon isolation already included in muon ID
-    syst_uncert_mu_iso *= 1/sqrt(3000);
-    syst_uncert_overlap_tracker *= 1/sqrt(3000);
-    syst_uncert_overlap_muon *= 1/sqrt(3000);
-    syst_pileup *= 1/sqrt(3000);
-    syst_dimuon_mass_consistency *= 1/sqrt(3000);
+    syst_uncert_mu_iso *= 1./sqrt(futureScaleFactor);
+    syst_uncert_overlap_tracker *= 1./sqrt(futureScaleFactor);
+    syst_uncert_overlap_muon *= 1./sqrt(futureScaleFactor);
+    syst_pileup *= 1./sqrt(futureScaleFactor);
+    syst_dimuon_mass_consistency *= 1./sqrt(futureScaleFactor);
     // theory
-    syst_nnlo_pt /= 2;
-    syst_pdf_as /= 2;
-    syst_H_xs_br /= 2;
+    syst_nnlo_pt /= 2.;
+    syst_pdf_as /= 2.;
+    syst_H_xs_br /= 2.;
     // background
-    syst_bbar_scaling *= 1/sqrt(3000);
-    syst_jpsi_scaling *= 1/sqrt(3000);
+    syst_bbar_scaling *= 1./sqrt(futureScaleFactor);
+    syst_jpsi_scaling *= 1./sqrt(futureScaleFactor);
   }
 
   // factors used in limit setting
