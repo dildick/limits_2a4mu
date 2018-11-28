@@ -4,7 +4,6 @@ import numpy as np
 
 ROOT.gROOT.SetBatch(True)
 
-plotDir = "plots_scenario_2/"
 
 execfile("scripts/tdrStyle.py")
 execfile("scripts/fSetPalette.py")
@@ -77,6 +76,14 @@ epsilon2_bins = 1000
 logEpsilon2_min = -12.1
 logEpsilon2_max =  -7.9
 
+scenario_label = "with Run 2 syst. uncert."; plotDir = "plots_scenario_1/"
+#scenario_label = "with YR18 syst. uncert."; plotDir = "plots_scenario_2/"
+
+ttt = ROOT.TLatex(0.75, 0.75, scenario_label)
+ttt.SetTextSize(0.04)
+ttt.SetTextFont(42)
+
+
 ################################################################################
 #       Plot Upper 95% CL Limit on number of events: 0.25 < mGammaD < 1.0
 ################################################################################
@@ -101,6 +108,7 @@ def limit_vs_mGammaD_2016():
     # Point
     array_mGammaD_limit_T5000.append(( m, fCmsLimitVsM_HybridNew(m) )) # fCmsLimitVsM_HybridNew(m) retireve the limit from toys experiments.
     array_mGammaD_limit_T5000_error.append(( m, (fCmsLimitVsM_HybridNew(m) - fCmsLimitVsM(m) ) / fCmsLimitVsM(m) )) # Error is the difference between fit and toy limit
+
 
   h_limit_vs_mGammaD_dummy = ROOT.TH2F("h_limit_vs_mGammaD_dummy", "h_limit_vs_mGammaD_dummy", 1000, 0.0, 9.0, 2000, 0.0, 20.0)
   #h_limit_vs_mGammaD_dummy = ROOT.TH2F("h_limit_vs_mGammaD_dummy", "h_limit_vs_mGammaD_dummy", 108, 0.0455, 8.9973, 1000, 0.0, 10.0)
@@ -138,6 +146,9 @@ def limit_vs_mGammaD_2016():
   #l_CMS.Draw()
   #l_CMSLumi.Draw()
   txtHeader.Draw()
+
+  ttt.Draw()
+
   cnv.cd()
   # Now Draw Errors
   padBot = ROOT.TPad( "padBot", "padBot", 0.0, 0.0, 1.0, 0.3 )
@@ -174,6 +185,7 @@ def limit_vs_mGammaD_2016():
   #l_CMSLumi.Draw()
   txtHeader.Draw()
 
+  ttt.Draw()
   cnv.Update()
   cnv.SaveAs(plotDir + "PDF/limit_Events_vs_mGammaD_3000.pdf")
   cnv.SaveAs(plotDir + "PNG/limit_Events_vs_mGammaD_3000.png")
@@ -188,11 +200,13 @@ def limit_CSxBR2xAlpha_fb_vs_mGammaD_2016():
   for m in fRange(0.25, 8.5, 201):
     array_mGammaD_limit_CSxBR2xAlpha_fb.append(( m, fCmsLimitVsM(m)/lumi_fbinv/SF/eFullMc_over_aGen )) # Transforming the Limit on N_event to Xsec limit
 
+  cnv.cd()
+
   h_limit_CSxBR2xAlpha_fb_vs_mGammaD_dummy = ROOT.TH2F("h_limit_CSxBR2xAlpha_fb_vs_mGammaD_dummy", "h_limit_CSxBR2xAlpha_fb_vs_mGammaD_dummy", 1000, 0.0, 9.0, 1000, 0.0, 15.0/lumi_fbinv/SF/eFullMc_over_aGen)
   #h_limit_CSxBR2xAlpha_fb_vs_mGammaD_dummy = ROOT.TH2F("h_limit_CSxBR2xAlpha_fb_vs_mGammaD_dummy", "h_limit_CSxBR2xAlpha_fb_vs_mGammaD_dummy", 108, 0.0455, 8.9973, 1000, 0.0, 10.0/lumi_fbinv/SF/eFullMc_over_aGen)
   h_limit_CSxBR2xAlpha_fb_vs_mGammaD_dummy.SetXTitle("m_{a} [GeV]")
   h_limit_CSxBR2xAlpha_fb_vs_mGammaD_dummy.SetYTitle("#sigma(pp #rightarrow 2a + X) B^{2}(a #rightarrow 2 #mu) #alpha_{gen} [fb]")
-  h_limit_CSxBR2xAlpha_fb_vs_mGammaD_dummy.SetTitleOffset(1.47, "Y")
+  h_limit_CSxBR2xAlpha_fb_vs_mGammaD_dummy.SetTitleOffset(1.7, "Y")
   h_limit_CSxBR2xAlpha_fb_vs_mGammaD_dummy.GetXaxis().SetNdivisions(505);
   #h_limit_CSxBR2xAlpha_fb_vs_mGammaD_dummy.GetYaxis().CenterTitle(1)
   h_limit_CSxBR2xAlpha_fb_vs_mGammaD_dummy.GetYaxis().SetTitleSize(0.05)
@@ -214,7 +228,13 @@ def limit_CSxBR2xAlpha_fb_vs_mGammaD_2016():
   l_limit_CSxBR2xAlpha_fb_vs_mGammaD.Draw()
   #l_CMS.Draw()
   #l_CMSLumi.Draw()
+
   txtHeader.Draw()
+
+  ttt.DrawLatex(4, 0.008, scenario_label)
+
+  cnv.Update()
+
   cnv.SaveAs(plotDir + "PDF/limit_CSxBR2xAlpha_fb_vs_mGammaD_3000.pdf")
   cnv.SaveAs(plotDir + "PNG/limit_CSxBR2xAlpha_fb_vs_mGammaD_3000.png")
   cnv.SaveAs(plotDir + "C/limit_CSxBR2xAlpha_fb_vs_mGammaD_3000.C")
@@ -1714,7 +1734,7 @@ def limit_CSxBR2_fb_vs_ma_2016():
   h_CSxBR_vs_ma_dummy = ROOT.TH2F("h_CSxBR_vs_ma_dummy", "h_CSxBR_vs_ma_dummy", 1000, 0., 4., 1000, 0.001, 2.)
   h_CSxBR_vs_ma_dummy.SetXTitle("m_{a_{1}} [GeV]")
   h_CSxBR_vs_ma_dummy.SetYTitle("#sigma(pp #rightarrow h_{i} #rightarrow 2a_{1}) B^{2}(a_{1} #rightarrow 2 #mu) [fb]")
-  h_CSxBR_vs_ma_dummy.SetTitleOffset(1.1, "Y")
+  h_CSxBR_vs_ma_dummy.SetTitleOffset(1.6, "Y")
   #h_CSxBR_vs_ma_dummy.GetYaxis().CenterTitle(1)
   h_CSxBR_vs_ma_dummy.GetYaxis().SetTitleSize(0.05)
   h_CSxBR_vs_ma_dummy.SetNdivisions(20210, "Y")
@@ -1783,6 +1803,7 @@ def limit_CSxBR2_fb_vs_ma_2016():
   l_CSxBR_vs_ma.AddEntry(gr_CSxBR_vs_ma_mh_150,"m_{h_{2}} = 150 GeV","LP")
   l_CSxBR_vs_ma.Draw()
 
+
   l_CSxBR_vs_ma_2 = ROOT.TLegend(0.35,0.56,0.9,0.71)
   l_CSxBR_vs_ma_2.SetFillColor(ROOT.kWhite)
   l_CSxBR_vs_ma_2.SetMargin(0.13)
@@ -1797,8 +1818,11 @@ def limit_CSxBR2_fb_vs_ma_2016():
   gr_CSxBR_vs_ma_mh_125_SM.Draw("C")
   txtHeader.Draw()
 
+  ttt.DrawLatex(0.25, 0.0015, scenario_label)
+
   cnv.SaveAs(plotDir + "PDF/CSxBR_vs_ma_3000.pdf")
   cnv.SaveAs(plotDir + "PNG/CSxBR_vs_ma_3000.png")
+  cnv.SaveAs(plotDir + "PNG/CSxBR_vs_ma_3000.C")
 
 
 ################################################################################
@@ -1812,7 +1836,7 @@ def limit_CSxBR2_fb_vs_mh_2016():
   h_CSxBR_NMSSM_vs_mh_dummy = ROOT.TH2F("h_CSxBR_NMSSM_vs_mh_dummy", "h_CSxBR_NMSSM_vs_mh_dummy", 1000, 83., 153., 100, 0., 0.03)
   h_CSxBR_NMSSM_vs_mh_dummy.SetXTitle("m_{h_{i}} [GeV]")
   h_CSxBR_NMSSM_vs_mh_dummy.SetYTitle("#sigma(pp #rightarrow h_{i}#rightarrow 2a_{1}) B^{2}(a_{1}#rightarrow 2 #mu) [fb]")
-  h_CSxBR_NMSSM_vs_mh_dummy.SetTitleOffset(1.2, "Y")
+  h_CSxBR_NMSSM_vs_mh_dummy.SetTitleOffset(1.6, "Y")
   #h_CSxBR_NMSSM_vs_mh_dummy.GetYaxis().CenterTitle(1)
   h_CSxBR_NMSSM_vs_mh_dummy.GetYaxis().SetTitleSize(0.05)
   #h_CSxBR_NMSSM_vs_mh_dummy.SetTitleOffset(1.1, "X")
@@ -1952,6 +1976,9 @@ def limit_CSxBR2_fb_vs_mh_2016():
 
   txtHeader.Draw()
 
+  ttt.DrawLatex(87.5,0.007, scenario_label)
+
   cnv.SaveAs(plotDir + "PDF/CSxBR_NMSSM_vs_mh_3000.pdf")
   cnv.SaveAs(plotDir + "PNG/CSxBR_NMSSM_vs_mh_3000.png")
+  cnv.SaveAs(plotDir + "PNG/CSxBR_NMSSM_vs_mh_3000.C")
 
